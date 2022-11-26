@@ -1,3 +1,5 @@
+import io from "socket.io-client";
+
 var socket = io.connect("http://10.0.0.217:3001", {
   secure: true,
   rejectUnauthorized: false,
@@ -27,7 +29,7 @@ socket.on("connect", () => {
     console.log("Successfuly conntected to socket @ http://10.0.0.217:3001");
 
     socket.on("create_session", (session) => {
-      sessionId = session.id
+      sessionId = session.id;
     });
 
     let previousUrl = "";

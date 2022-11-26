@@ -12,7 +12,8 @@
     "@netlify/plugin-nextjs": "^4.29.2",
     "express": "^4.18.2",
     "geoip-lite": "^1.4.6",
-    "socket.io": "^4.5.4"
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4"
   },
   "type": "module",
   "description": ""
