@@ -33,6 +33,11 @@ socket.on("connect", () => {
     let previousUrl = "";
 
     const onMouseMove = debounce((e) => {
+      console.log({
+        type: "mousemove",
+          date: Date.now(),
+          pos: [e.clientX, e.clientY],
+      });
       socket.emit("packet", [
         {
           type: "mousemove",
@@ -63,7 +68,6 @@ socket.on("connect", () => {
     observer.observe(document, config);
     window.addEventListener("mousemove", onMouseMove);
 
-    console.log(socket);
 
     socket.emit("create_session", {
       company_id: 1,
