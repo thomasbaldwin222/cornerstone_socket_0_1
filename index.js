@@ -1,5 +1,3 @@
-import io from "socket.io-client";
-
 var socket = io.connect("http://10.0.0.217:3001", {
   secure: true,
   rejectUnauthorized: false,
