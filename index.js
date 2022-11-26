@@ -65,7 +65,7 @@ socket.on("connect", () => {
 
     var clientIp = socket.request.connection.remoteAddress;
 
-    console.log(clientId, socket);
+    console.log(clientIp, socket);
 
     socket.emit("create_session", {
       company_id: 1,
