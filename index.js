@@ -5,7 +5,7 @@ var socket = io.connect("http://10.0.0.217:3001", {
   transport: ["websocket"],
 });
 
-function debounce(func, timeout = 30) {
+function debounce(func, timeout = 150) {
   let timer;
   return (...args) => {
     clearTimeout(timer);
