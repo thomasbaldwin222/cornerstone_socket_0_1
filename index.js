@@ -63,9 +63,7 @@ socket.on("connect", () => {
     observer.observe(document, config);
     window.addEventListener("mousemove", onMouseMove);
 
-    var clientIp = socket.request.connection.remoteAddress;
-
-    console.log(clientIp, socket);
+    console.log(socket);
 
     socket.emit("create_session", {
       company_id: 1,
