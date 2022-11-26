@@ -5,7 +5,7 @@ var socket = io.connect("http://10.0.0.217:3001", {
   transport: ["websocket"],
 });
 
-function debounce(func, timeout = 5) {
+function debounce(func, timeout = 30) {
   let timer;
   return (...args) => {
     clearTimeout(timer);
@@ -62,6 +62,10 @@ socket.on("connect", () => {
     // start observing change
     observer.observe(document, config);
     window.addEventListener("mousemove", onMouseMove);
+
+    var clientIp = socket.request.connection.remoteAddress;
+
+    console.log(clientId, socket);
 
     socket.emit("create_session", {
       company_id: 1,
