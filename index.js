@@ -5,7 +5,7 @@ var socket = io.connect("http://10.0.0.217:3001", {
   transport: ["websocket"],
 });
 
-function debounce(func, timeout = 150) {
+function debounce(func, timeout = 40) {
   let timer;
   return (...args) => {
     clearTimeout(timer);
@@ -33,11 +33,6 @@ socket.on("connect", () => {
     let previousUrl = "";
 
     const onMouseMove = debounce((e) => {
-      console.log({
-        type: "mousemove",
-          date: Date.now(),
-          pos: [e.clientX, e.clientY],
-      });
       socket.emit("packet", [
         {
           type: "mousemove",
