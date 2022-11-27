@@ -36,17 +36,23 @@ socket.on("connect", () => {
       sessionId = session.id;
     });
 
+    rrwebRecord({
+      emit(event) {
+        socket.emit("rrweb_event", event);
+      },
+    });
+
     let previousUrl = "";
 
-    const onMouseMove = debounce((e) => {
-      socket.emit("packet", [
-        {
-          type: "mousemove",
-          date: Date.now(),
-          pos: [e.clientX, e.clientY],
-        },
-      ]);
-    });
+    // const onMouseMove = debounce((e) => {
+    //   socket.emit("packet", [
+    //     {
+    //       type: "mousemove",
+    //       date: Date.now(),
+    //       pos: [e.clientX, e.clientY],
+    //     },
+    //   ]);
+    // });
 
     const urlObserver = () => {
       if (window.location.href !== previousUrl) {
@@ -67,8 +73,7 @@ socket.on("connect", () => {
     const config = { subtree: true, childList: true };
     // start observing change
     observer.observe(document, config);
-    window.addEventListener("mousemove", onMouseMove);
-
+    // window.addEventListener("mousemove", onMouseMove);
 
     socket.emit("create_session", {
       company_id: 1,
