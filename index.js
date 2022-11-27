@@ -44,16 +44,6 @@ socket.on("connect", () => {
 
     let previousUrl = "";
 
-    // const onMouseMove = debounce((e) => {
-    //   socket.emit("packet", [
-    //     {
-    //       type: "mousemove",
-    //       date: Date.now(),
-    //       pos: [e.clientX, e.clientY],
-    //     },
-    //   ]);
-    // });
-
     const urlObserver = () => {
       if (window.location.href !== previousUrl) {
         socket.emit("packet", [
