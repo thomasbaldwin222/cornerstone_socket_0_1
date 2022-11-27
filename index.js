@@ -5,11 +5,11 @@ var socket = io.connect("http://10.0.0.217:3001", {
   transport: ["websocket"],
 });
 
-rrwebRecord({
-  emit(event) {
-    console.log("event", event)
-  },
-});
+// rrwebRecord({
+//   emit(event) {
+//     console.log("event", event)
+//   },
+// });
 
 function debounce(func, timeout = 15) {
   let timer;
