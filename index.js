@@ -5,7 +5,7 @@ var socket = io.connect("http://10.0.0.217:3001", {
   transport: ["websocket"],
 });
 
-window.rrweb.record({
+rrwebRecord({
   emit(event) {
     console.log("event", event)
   },
