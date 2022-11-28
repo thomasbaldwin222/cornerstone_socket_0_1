@@ -46,38 +46,38 @@ socket.on("connect", () => {
         href: window.location.href,
       },
     });
+
+    socket.on("create_session", (session) => {
+      sessionId = session.id;
+    });
+
+    // Initialize rrweb recorder
+    rrwebRecord({
+      emit(event) {
+        socket.emit("rrweb_event", event);
+      },
+    });
+
+    const urlObserver = () => {
+      if (window.location.href !== previousUrl) {
+        socket.emit("packet", [
+          {
+            type: "navigate",
+            date: Date.now(),
+            data: {
+              url: window.location.href,
+            },
+          },
+        ]);
+        previousUrl = window.location.href;
+      }
+    };
+
+    // Create mutation observer to listen to url changes
+    const observer = new MutationObserver(urlObserver);
+    const config = { subtree: true, childList: true };
+    observer.observe(document, config);
   } catch (e) {
     console.log(e);
   }
-
-  socket.on("create_session", (session) => {
-    sessionId = session.id;
-  });
-
-  // Initialize rrweb recorder
-  rrwebRecord({
-    emit(event) {
-      socket.emit("rrweb_event", event);
-    },
-  });
-
-  // Create mutation observer to listen to url changes
-  const observer = new MutationObserver(urlObserver);
-  const config = { subtree: true, childList: true };
-  observer.observe(document, config);
 });
-
-const urlObserver = () => {
-  if (window.location.href !== previousUrl) {
-    socket.emit("packet", [
-      {
-        type: "navigate",
-        date: Date.now(),
-        data: {
-          url: window.location.href,
-        },
-      },
-    ]);
-    previousUrl = window.location.href;
-  }
-};
