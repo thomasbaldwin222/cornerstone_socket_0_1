@@ -26,8 +26,8 @@ var socket = io.connect(CONNECTION_URL, {
 console.log("_socket: Intiialized");
 console.log("_socket: Attempting connection...");
 
-socket.on("disconnect", () => {
-  console.log("_socket: Disconnected");
+socket.on("disconnect", (reason) => {
+  console.log("_socket: Disconnected: " + reason);
 });
 
 //Listener
