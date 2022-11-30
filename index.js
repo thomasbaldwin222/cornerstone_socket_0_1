@@ -23,8 +23,12 @@ var socket = io.connect(CONNECTION_URL, {
 //   };
 // }
 
-console.log("_socket: intiialized");
-console.log("_socket: attempting connection...");
+console.log("_socket: Intiialized");
+console.log("_socket: Attempting connection...");
+
+socket.on("disconnect", () => {
+  console.log("_socket: Disconnected");
+});
 
 //Listener
 socket.on("connect", () => {
@@ -34,7 +38,7 @@ socket.on("connect", () => {
   console.log({ socket });
 
   try {
-    console.log("_socket: connection sucesss, listening at " + CONNECTION_URL);
+    console.log("_socket: Connection sucesss, listening at " + CONNECTION_URL);
 
     // Create session through middleare
     socket.emit("create_session", {
@@ -79,6 +83,6 @@ socket.on("connect", () => {
     const config = { subtree: true, childList: true };
     observer.observe(document, config);
   } catch (e) {
-    console.log(e);
+    console.error("_socket: Failed to build with error: " + e);
   }
 });
