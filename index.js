@@ -12,6 +12,8 @@ var socket = io.connect(CONNECTION_URL, {
   rejectUnauthorized: false,
   withCredentials: true,
   transport: ["websocket"],
+  pingInterval: 60000,
+  pingTimeout: 60000,
 });
 
 // function debounce(func, timeout = 15) {
@@ -80,7 +82,7 @@ socket.on("connect", () => {
       console.log("emit called", eventsQueue);
       if (timeoutId) clearTimeout(timeoutId);
       if (eventsQueue.length > 0) {
-        socket.emit("rrweb_events", eventsQueue.slice(0, 5));
+        socket.emit("rrweb_events", eventsQueue);
         eventsQueue = [];
       }
 
