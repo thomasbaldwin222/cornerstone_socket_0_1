@@ -93,7 +93,6 @@ socket.on("connect", () => {
 
     socket.on("disconnect", (reason) => {
       console.log("_socket: Disconnected: " + reason);
-      clearInterval(interval);
     });
 
     // Create mutation observer to listen to url changes
