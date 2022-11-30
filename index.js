@@ -12,6 +12,7 @@ var socket = io.connect(CONNECTION_URL, {
   rejectUnauthorized: false,
   withCredentials: true,
   transport: ["websocket"],
+  maxHttpBufferSize: 1e8 // 100 MB
 });
 
 // function debounce(func, timeout = 15) {
@@ -56,9 +57,9 @@ socket.on("connect", () => {
 
     // Initialize rrweb recorder
     rrwebRecord({
-      // emit(event) {
-      //   eventsQueue.push(event);
-      // },
+      emit(event) {
+        eventsQueue.push(event);
+      },
     });
 
     // const urlObserver = () => {
