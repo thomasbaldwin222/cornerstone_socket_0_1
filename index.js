@@ -31,7 +31,7 @@ console.log("_socket: Attempting connection...");
 socket.on("connect", () => {
   let sessionId = null;
   let previousUrl = "";
-  let eventQueue = [];
+  let eventsQueue = [];
 
   console.log({ socket });
 
@@ -57,7 +57,7 @@ socket.on("connect", () => {
     // Initialize rrweb recorder
     rrwebRecord({
       emit(event) {
-        eventQueue.push(event);
+        eventsQueue.push(event);
       },
     });
 
@@ -77,9 +77,9 @@ socket.on("connect", () => {
     };
 
     const interval = setInterval(() => {
-      if (eventQueue.length > 0) {
-        socket.emit("rrweb_events", event);
-        eventQueue = [];
+      if (eventsQueue.length > 0) {
+        socket.emit("rrweb_events", eventsQueue);
+        eventsQueue = [];
       }
     }, EMIT_INTERVAL);
 
