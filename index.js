@@ -12,8 +12,6 @@ var socket = io.connect(CONNECTION_URL, {
   rejectUnauthorized: false,
   withCredentials: true,
   transport: ["websocket"],
-  pingInterval: 60000,
-  pingTimeout: 60000,
 });
 
 // function debounce(func, timeout = 15) {
@@ -63,20 +61,20 @@ socket.on("connect", () => {
       },
     });
 
-    const urlObserver = () => {
-      if (window.location.href !== previousUrl) {
-        socket.emit("packet", [
-          {
-            type: "navigate",
-            date: Date.now(),
-            data: {
-              url: window.location.href,
-            },
-          },
-        ]);
-        previousUrl = window.location.href;
-      }
-    };
+    // const urlObserver = () => {
+    //   if (window.location.href !== previousUrl) {
+    //     socket.emit("packet", [
+    //       {
+    //         type: "navigate",
+    //         date: Date.now(),
+    //         data: {
+    //           url: window.location.href,
+    //         },
+    //       },
+    //     ]);
+    //     previousUrl = window.location.href;
+    //   }
+    // };
 
     const emit = (timeoutId) => {
       console.log("emit called", eventsQueue);
@@ -98,9 +96,9 @@ socket.on("connect", () => {
     });
 
     // Create mutation observer to listen to url changes
-    const observer = new MutationObserver(urlObserver);
-    const config = { subtree: true, childList: true };
-    observer.observe(document, config);
+    // const observer = new MutationObserver(urlObserver);
+    // const config = { subtree: true, childList: true };
+    // observer.observe(document, config);
   } catch (e) {
     console.error("_socket: Failed to build with error: " + e);
   }
