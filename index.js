@@ -5,6 +5,7 @@
 // Create a room for each company, COMPANY_ID:1, COMPANY_ID:2, ...
 
 const CONNECTION_URL = "http://10.0.0.217:3001";
+const EMIT_INTERVAL = 250;
 // const CONNECTION_URL = "http://172.20.10.2:3001";
 var socket = io.connect(CONNECTION_URL, {
   secure: true,
@@ -26,14 +27,11 @@ var socket = io.connect(CONNECTION_URL, {
 console.log("_socket: Intiialized");
 console.log("_socket: Attempting connection...");
 
-socket.on("disconnect", (reason) => {
-  console.log("_socket: Disconnected: " + reason);
-});
-
 //Listener
 socket.on("connect", () => {
   let sessionId = null;
   let previousUrl = "";
+  let eventQueue = [];
 
   console.log({ socket });
 
@@ -59,7 +57,7 @@ socket.on("connect", () => {
     // Initialize rrweb recorder
     rrwebRecord({
       emit(event) {
-        socket.emit("rrweb_event", event);
+        eventQueue.push(event);
       },
     });
 
@@ -77,6 +75,18 @@ socket.on("connect", () => {
         previousUrl = window.location.href;
       }
     };
+
+    const interval = setInterval(() => {
+      if (eventQueue.length > 0) {
+        socket.emit("rrweb_events", event);
+        eventQueue = [];
+      }
+    }, EMIT_INTERVAL);
+
+    socket.on("disconnect", (reason) => {
+      console.log("_socket: Disconnected: " + reason);
+      clearInterval(interval);
+    });
 
     // Create mutation observer to listen to url changes
     const observer = new MutationObserver(urlObserver);
