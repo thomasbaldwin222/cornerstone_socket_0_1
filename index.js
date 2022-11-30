@@ -57,7 +57,7 @@ socket.on("connect", () => {
     // Initialize rrweb recorder
     rrwebRecord({
       emit(event) {
-        eventsQueue.push(event);
+        // eventsQueue.push(event);
       },
     });
 
