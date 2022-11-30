@@ -80,7 +80,7 @@ socket.on("connect", () => {
       console.log("emit called", eventsQueue);
       if (timeoutId) clearTimeout(timeoutId);
       if (eventsQueue.length > 0) {
-        // socket.emit("rrweb_events", JSON.stringify(eventsQueue));
+        socket.emit("rrweb_events", JSON.stringify(eventsQueue.slice(0, 1)));
         eventsQueue = [];
       }
 
