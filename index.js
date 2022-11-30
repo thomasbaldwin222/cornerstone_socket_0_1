@@ -76,14 +76,20 @@ socket.on("connect", () => {
       }
     };
 
-    const interval = setInterval(() => {
+    const emit = (timeoutId) => {
+      console.log("emit called", eventsQueue);
+      if (timeoutId) clearTimeout(timeoutId);
       if (eventsQueue.length > 0) {
-        console.log("before", eventsQueue);
         socket.emit("rrweb_events", eventsQueue);
         eventsQueue = [];
-        console.log("after", eventsQueue);
       }
-    }, EMIT_INTERVAL);
+
+      const id = setTimeout(() => {
+        emit(id);
+      }, EMIT_INTERVAL);
+    };
+
+    emit();
 
     socket.on("disconnect", (reason) => {
       console.log("_socket: Disconnected: " + reason);
