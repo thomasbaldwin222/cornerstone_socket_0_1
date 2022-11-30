@@ -78,9 +78,10 @@ socket.on("connect", () => {
 
     const interval = setInterval(() => {
       if (eventsQueue.length > 0) {
-        console.log(eventsQueue);
+        console.log("before", eventsQueue);
         socket.emit("rrweb_events", eventsQueue);
         eventsQueue = [];
+        console.log("after", eventsQueue);
       }
     }, EMIT_INTERVAL);
 
