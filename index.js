@@ -57,7 +57,7 @@ socket.on("connect", () => {
     // Initialize rrweb recorder
     rrwebRecord({
       emit(event) {
-        // eventsQueue.push(event);
+        eventsQueue.push(event);
       },
     });
 
@@ -80,7 +80,7 @@ socket.on("connect", () => {
       console.log("emit called", eventsQueue);
       if (timeoutId) clearTimeout(timeoutId);
       if (eventsQueue.length > 0) {
-        socket.emit("rrweb_events", eventsQueue.slice(0, 20));
+        socket.emit("rrweb_events", eventsQueue.slice(0, 5));
         eventsQueue = [];
       }
 
