@@ -55,11 +55,11 @@ socket.on("connect", () => {
     });
 
     // Initialize rrweb recorder
-    rrwebRecord({
-      emit(event) {
-        eventsQueue.push(event);
-      },
-    });
+    // rrwebRecord({
+    //   emit(event) {
+    //     eventsQueue.push(event);
+    //   },
+    // });
 
     // const urlObserver = () => {
     //   if (window.location.href !== previousUrl) {
@@ -80,7 +80,7 @@ socket.on("connect", () => {
       console.log("emit called", eventsQueue);
       if (timeoutId) clearTimeout(timeoutId);
       if (eventsQueue.length > 0) {
-        socket.emit("rrweb_events", JSON.stringify(eventsQueue.slice(0, 1)));
+        socket.to("company_1").emit("rrweb_events", JSON.stringify(eventsQueue));
         eventsQueue = [];
       }
 
