@@ -80,7 +80,7 @@ socket.on("connect", () => {
       if (timeoutId) clearTimeout(timeoutId);
       if (eventsQueue.length > 0) {
         console.log("emit called", eventsQueue);
-        io.to("company_1").emit("rrweb_events", JSON.stringify(eventsQueue));
+        socket.emit("rrweb_events", JSON.stringify(eventsQueue));
         eventsQueue = [];
       }
 
