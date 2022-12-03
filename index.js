@@ -38,6 +38,8 @@ socket.on("connect", () => {
   try {
     console.log("_socket: Connection sucesss, listening at " + CONNECTION_URL);
 
+    socket.join("company_1");
+
     // Create session through middleare
     socket.emit("create_session", {
       company_id: 1,
@@ -80,7 +82,7 @@ socket.on("connect", () => {
       if (timeoutId) clearTimeout(timeoutId);
       if (eventsQueue.length > 0) {
         console.log("emit called", eventsQueue);
-        socket.to("company_1").emit("rrweb_events", JSON.stringify(eventsQueue));
+        io.to("company_1").emit("rrweb_events", JSON.stringify(eventsQueue));
         eventsQueue = [];
       }
 
