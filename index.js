@@ -38,8 +38,6 @@ socket.on("connect", () => {
   try {
     console.log("_socket: Connection sucesss, listening at " + CONNECTION_URL);
 
-    socket.join("company_1");
-
     // Create session through middleare
     socket.emit("create_session", {
       company_id: 1,
