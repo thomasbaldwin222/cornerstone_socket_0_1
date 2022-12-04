@@ -4,7 +4,7 @@
 // Send user location data
 // Create a room for each company, COMPANY_ID:1, COMPANY_ID:2, ...
 
-const CONNECTION_URL = "https://cornerstone-db.herokuapp.com/";
+const CONNECTION_URL = "http://10.0.0.217:3001";
 const EMIT_INTERVAL = 1000;
 // const CONNECTION_URL = "http://172.20.10.2:3001";
 var socket = io.connect(CONNECTION_URL, {
