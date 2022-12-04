@@ -12,6 +12,9 @@ var socket = io.connect(CONNECTION_URL, {
   rejectUnauthorized: false,
   withCredentials: true,
   transport: ["websocket"],
+  query: {
+    room_id: "company_1"
+  }
 });
 
 // function debounce(func, timeout = 15) {
