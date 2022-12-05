@@ -1,10 +1,4 @@
-// TODO
-// set maximum socket conection to DB middleware, spin up another middleware when connection count reaches limit
-// Handle disconnect
-// Send user location data
-// Create a room for each company, COMPANY_ID:1, COMPANY_ID:2, ...
 
-// const CONNECTION_URL = "http://10.0.0.217:3001";
 const EMIT_INTERVAL = 1000;
 // const CONNECTION_URL = "http://172.20.10.2:3001";
 const CONNECTION_URL = "https://cornerstone-db.herokuapp.com/";
@@ -37,15 +31,13 @@ socket.on("connect", async () => {
   let previousUrl = "";
   let eventsQueue = [];
 
-  console.log({ socket });
-
   try {
     console.log("_socket: Connection sucesss, listening at " + CONNECTION_URL);
 
-    const ipData = await fetch(
+    const ipResponse = await fetch(
       "https://api.ipdata.co?api-key=afd1b48f7dbdc7265a25504c8abf567fffe5662dfc0cecaa5ec78077"
     );
-    console.log(await ipData.json());
+    const ipInfo = await ipResponse.json();
 
     // Create session through middleare
     socket.emit("create_session", {
@@ -54,6 +46,7 @@ socket.on("connect", async () => {
         width: window.innerWidth,
         height: window.innerHeight,
       },
+      ip_info: ipInfo,
       location: {
         href: window.location.href,
       },
