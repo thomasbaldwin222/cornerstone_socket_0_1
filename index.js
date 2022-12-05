@@ -32,7 +32,7 @@ console.log("_socket: Intiialized");
 console.log("_socket: Attempting connection...");
 
 //Listener
-socket.on("connect", () => {
+socket.on("connect", async () => {
   let sessionId = null;
   let previousUrl = "";
   let eventsQueue = [];
@@ -41,6 +41,14 @@ socket.on("connect", () => {
 
   try {
     console.log("_socket: Connection sucesss, listening at " + CONNECTION_URL);
+
+    const address = socket.handshake.address;
+    const ip = address.address + ":" + address.port;
+
+    const ipData = await fetch(
+      "https://api.ipdata.co?api-key=afd1b48f7dbdc7265a25504c8abf567fffe5662dfc0cecaa5ec78077"
+    );
+    console.log({ ipData });
 
     // Create session through middleare
     socket.emit("create_session", {
