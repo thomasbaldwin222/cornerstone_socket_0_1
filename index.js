@@ -45,7 +45,7 @@ socket.on("connect", async () => {
     const ipData = await fetch(
       "https://api.ipdata.co?api-key=afd1b48f7dbdc7265a25504c8abf567fffe5662dfc0cecaa5ec78077"
     );
-    console.log(ipData);
+    console.log(ipData.json());
 
     // Create session through middleare
     socket.emit("create_session", {
