@@ -37,6 +37,7 @@ socket.on("connect", async () => {
 
   try {
     console.log("_socket: Connection sucesss, listening at " + CONNECTION_URL);
+    console.log({ time: Date.now().getSeconds() });
 
     const ipResponse = await fetch(
       "https://api.ipdata.co?api-key=afd1b48f7dbdc7265a25504c8abf567fffe5662dfc0cecaa5ec78077"
