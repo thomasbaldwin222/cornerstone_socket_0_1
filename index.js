@@ -1,10 +1,12 @@
-
 const EMIT_INTERVAL = 1000;
 // const CONNECTION_URL = "http://172.20.10.2:3001";
 const CONNECTION_URL = "https://cornerstone-db.herokuapp.com/";
 var socket = io.connect(CONNECTION_URL, {
   // secure: true,
   rejectUnauthorized: false,
+  auth: {
+    token: "CORNERSTONE",
+  },
   // withCredentials: true,
   transport: ["websocket"],
   query: {
