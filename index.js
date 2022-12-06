@@ -11,7 +11,7 @@ var socket = io.connect(CONNECTION_URL, {
   transport: ["websocket"],
   query: {
     room_id: "company_1",
-    location: window.location.href
+    location: window.location.href,
   },
 });
 
@@ -31,6 +31,7 @@ console.log("_socket: Attempting connection...");
 //Listener
 socket.on("connect", async () => {
   let sessionId = null;
+  let recorder = null;
   let previousUrl = "";
   let eventsQueue = [];
 
@@ -59,11 +60,21 @@ socket.on("connect", async () => {
       sessionId = session.id;
     });
 
-    // Initialize rrweb recorder
-    rrwebRecord({
-      emit(event) {
-        eventsQueue.push(event);
-      },
+    socket.on("config", (payload) => {
+      console.log(`_socket: Config  data received`);
+      if (payload.recording_enabled && !recorder) {
+        console.log(`_socket: Recording enabled; recording started.`);
+        // Initialize rrweb recorder
+        recorder = rrwebRecord({
+          emit(event) {
+            eventsQueue.push(event);
+          },
+        });
+      } else {
+        console.log(
+          `_socket: Recording disabled or recording already in progress.`
+        );
+      }
     });
 
     // const urlObserver = () => {
