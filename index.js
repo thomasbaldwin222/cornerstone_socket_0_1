@@ -11,6 +11,7 @@ var socket = io.connect(CONNECTION_URL, {
   transport: ["websocket"],
   query: {
     room_id: "company_1",
+    location: window.location.href
   },
 });
 
