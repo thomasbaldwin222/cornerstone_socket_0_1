@@ -70,6 +70,15 @@ socket.on("connect", async () => {
           emit(event) {
             eventsQueue.push(event);
           },
+          recordCanvas: true,
+          sampling: {
+            canvas: 15,
+          },
+          // optional image format settings
+          dataURLOptions: {
+            type: "image/webp",
+            quality: 0.6,
+          },
         });
       } else {
         console.log(
