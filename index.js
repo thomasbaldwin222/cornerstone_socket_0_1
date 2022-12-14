@@ -87,20 +87,19 @@ socket.on("connect", async () => {
       }
     });
 
-    // const urlObserver = () => {
-    //   if (window.location.href !== previousUrl) {
-    //     socket.emit("packet", [
-    //       {
-    //         type: "navigate",
-    //         date: Date.now(),
-    //         data: {
-    //           url: window.location.href,
-    //         },
-    //       },
-    //     ]);
-    //     previousUrl = window.location.href;
-    //   }
-    // };
+    const urlObserver = () => {
+      if (window.location.href !== previousUrl) {
+        const event = {
+          type: "navigate",
+          date: Date.now(),
+          data: {
+            url: window.location.href,
+          },
+        };
+        eventsQueue.push(event);
+        previousUrl = window.location.href;
+      }
+    };
 
     const emit = (timeoutId) => {
       if (timeoutId) clearTimeout(timeoutId);
@@ -122,9 +121,9 @@ socket.on("connect", async () => {
     });
 
     // Create mutation observer to listen to url changes
-    // const observer = new MutationObserver(urlObserver);
-    // const config = { subtree: true, childList: true };
-    // observer.observe(document, config);
+    const observer = new MutationObserver(urlObserver);
+    const config = { subtree: true, childList: true };
+    observer.observe(document, config);
   } catch (e) {
     console.error("_socket: Failed to build with error: " + e);
   }
