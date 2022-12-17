@@ -59,13 +59,14 @@ socket.on("connect", async () => {
 
     socket.on("create_session", (session) => {
       sessionId = session.id;
-      console.log(`_socket: Recording enabled; recording started.`);
-      // Initialize rrweb recorder
-      recorder = rrwebRecord({
-        emit(event) {
-          eventsQueue.push(event);
-        },
-      });
+    });
+    
+    console.log(`_socket: Recording enabled; recording started.`);
+    // Initialize rrweb recorder
+    recorder = rrwebRecord({
+      emit(event) {
+        eventsQueue.push(event);
+      },
     });
 
 
