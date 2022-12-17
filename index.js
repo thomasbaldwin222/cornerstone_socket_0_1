@@ -60,11 +60,12 @@ socket.on("connect", async () => {
     socket.on("create_session", (session) => {
       sessionId = session.id;
     });
-    
+
     console.log(`_socket: Recording enabled; recording started.`);
     // Initialize rrweb recorder
-    recorder = rrwebRecord({
+    rrwebRecord({
       emit(event) {
+        console.log("_socket: Events pushed to eventsQueue")
         eventsQueue.push(event);
       },
     });
@@ -113,7 +114,7 @@ socket.on("connect", async () => {
     const emit = (timeoutId) => {
       if (timeoutId) clearTimeout(timeoutId);
       if (eventsQueue.length > 0) {
-        console.log("emit called", eventsQueue);
+        console.log("_socket: Events pushed to eventsQueue")
         socket.emit("rrweb_events", JSON.stringify(eventsQueue));
         eventsQueue = [];
       }
