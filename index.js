@@ -59,33 +59,41 @@ socket.on("connect", async () => {
 
     socket.on("create_session", (session) => {
       sessionId = session.id;
+      console.log(`_socket: Recording enabled; recording started.`);
+      // Initialize rrweb recorder
+      recorder = rrwebRecord({
+        emit(event) {
+          eventsQueue.push(event);
+        },
+      });
     });
 
-    socket.on("config", (payload) => {
-      console.log(`_socket: Config  data received`);
-      if (payload.recording_enabled && !recorder) {
-        console.log(`_socket: Recording enabled; recording started.`);
-        // Initialize rrweb recorder
-        recorder = rrwebRecord({
-          emit(event) {
-            eventsQueue.push(event);
-          },
-          recordCanvas: true,
-          sampling: {
-            canvas: 15,
-          },
-          // optional image format settings
-          dataURLOptions: {
-            type: "image/webp",
-            quality: 0.6,
-          },
-        });
-      } else {
-        console.log(
-          `_socket: Recording disabled or recording already in progress.`
-        );
-      }
-    });
+
+    // socket.on("config", (payload) => {
+    //   console.log(`_socket: Config  data received`);
+    //   if (payload.recording_enabled && !recorder) {
+    //     console.log(`_socket: Recording enabled; recording started.`);
+    //     // Initialize rrweb recorder
+    //     recorder = rrwebRecord({
+    //       emit(event) {
+    //         eventsQueue.push(event);
+    //       },
+    //       // recordCanvas: true,
+    //       // sampling: {
+    //       //   canvas: 15,
+    //       // },
+    //       // // optional image format settings
+    //       // dataURLOptions: {
+    //       //   type: "image/webp",
+    //       //   quality: 0.6,
+    //       // },
+    //     });
+    //   } else {
+    //     console.log(
+    //       `_socket: Recording disabled or recording already in progress.`
+    //     );
+    //   }
+    // });
 
     const urlObserver = () => {
       if (window.location.href !== previousUrl) {
